@@ -1,0 +1,594 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overscroll-behavior-y: none;
+}
+
+:root {
+  --header-size: clamp(2.5rem, 10vw, 6rem);
+  --subheader-size: clamp(1rem, 4vw, 1.25rem);
+}
+
+.page-fade-in {
+  animation: pageFadeIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; filter: blur(5px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+body {
+  font-family: 'Share Tech Mono', monospace;
+  overflow-x: hidden;
+  letter-spacing: 0.5px;
+}
+
+h1, h2, h3, h4, h5, h6, .section-title {
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInSection {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Apple-style Scroll animation keyframes - Fade + Blur + Smooth Movement */
+@keyframes slideUpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes slideInLeftFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes slideInRightFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes fadeInOnly {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes zoomInFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes slideDownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Apple-style Scroll Animation Classes - Premium, Smooth, Minimal */
+.scroll-reveal {
+  opacity: 0;
+  will-change: transform, opacity, filter;
+}
+
+.scroll-reveal-up {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.scroll-reveal.scroll-animate-in.scroll-reveal-up,
+.scroll-animate-in .scroll-reveal-up {
+  animation: slideUpFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.scroll-reveal.scroll-animate-in.scroll-reveal-left,
+.scroll-animate-in .scroll-reveal-left {
+  animation: slideInLeftFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.scroll-reveal.scroll-animate-in.scroll-reveal-right,
+.scroll-animate-in .scroll-reveal-right {
+  animation: slideInRightFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.scroll-reveal-fade {
+  opacity: 0;
+}
+
+.scroll-reveal.scroll-animate-in.scroll-reveal-fade,
+.scroll-animate-in .scroll-reveal-fade {
+  animation: fadeInOnly 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Additional animation styles */
+.scroll-reveal-zoom {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.scroll-reveal.scroll-animate-in.scroll-reveal-zoom,
+.scroll-animate-in .scroll-reveal-zoom {
+  animation: zoomInFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.scroll-reveal-down {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.scroll-reveal.scroll-animate-in.scroll-reveal-down,
+.scroll-animate-in .scroll-reveal-down {
+  animation: slideDownFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Parallax Background */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  will-change: background-position;
+}
+
+/* Staggered children animations - Sequential reveal for premium feel */
+.scroll-reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.scroll-animate-in .scroll-reveal-stagger > *,
+.scroll-animate-in.scroll-reveal-stagger > * {
+  animation: slideUpFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.scroll-animate-in.scroll-reveal-stagger > :nth-child(1) { animation-delay: 0.1s; }
+.scroll-animate-in.scroll-reveal-stagger > :nth-child(2) { animation-delay: 0.2s; }
+.scroll-animate-in.scroll-reveal-stagger > :nth-child(3) { animation-delay: 0.3s; }
+.scroll-animate-in.scroll-reveal-stagger > :nth-child(4) { animation-delay: 0.4s; }
+.scroll-animate-in.scroll-reveal-stagger > :nth-child(5) { animation-delay: 0.5s; }
+.scroll-animate-in.scroll-reveal-stagger > :nth-child(6) { animation-delay: 0.6s; }
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.fade-in-section {
+  animation: fadeInSection 0.6s ease-out both;
+}
+
+/* Skill Bar Fill Animation */
+@keyframes fillBar {
+  from {
+    width: 0%;
+    opacity: 0;
+  }
+  to {
+    width: var(--width, 100%);
+    opacity: 1;
+  }
+}
+
+.skill-bar-fill {
+  width: 0%;
+  opacity: 0;
+  transition: all 0.3s ease-out;
+}
+
+.skill-bar-fill.animate-fill {
+  animation: fillBar 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Section Divider Animations */
+@keyframes wave {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(25px);
+  }
+}
+
+@keyframes waveSlow {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(-25px);
+  }
+}
+
+@keyframes blob {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+@keyframes slideDiagonal {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-wave {
+  animation: wave 3s ease-in-out infinite;
+}
+
+.animate-wave-slow {
+  animation: waveSlow 4s ease-in-out infinite;
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animate-slide-diagonal {
+  animation: slideDiagonal 6s linear infinite;
+}
+
+/* Smooth scroll for navigation */
+a[href^='#'] {
+  scroll-behavior: smooth;
+}
+
+/* Section titles */
+.section-title {
+  @apply text-4xl font-bold text-center mb-16;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply px-8 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-black rounded-lg hover:shadow-[0_0_15px_rgba(0,255,65,0.5)] transform hover:-translate-y-1 transition-all font-bold uppercase tracking-wider;
+}
+
+.btn-secondary {
+  @apply px-8 py-3 border-2 border-cyan-500 text-cyan-400 rounded-lg hover:bg-cyan-500/10 transform hover:-translate-y-1 transition-all font-bold uppercase tracking-wider shadow-[0_0_10px_rgba(0,243,255,0.2)];
+}
+
+/* Cards */
+.skill-card {
+  @apply p-6 rounded-lg bg-white dark:bg-gray-800 hover:shadow-lg transition-all hover:-translate-y-2;
+}
+
+.project-card {
+  @apply rounded-lg overflow-hidden transition-all hover:-translate-y-2 bg-gray-50 dark:bg-gray-700 hover:shadow-2xl;
+}
+
+.cert-card {
+  @apply p-6 rounded-lg transition-all hover:-translate-y-2 bg-white dark:bg-gray-800 hover:shadow-lg;
+}
+
+.achievement-card {
+  @apply p-8 rounded-lg text-center transition-all hover:-translate-y-2 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-600/20 dark:to-purple-600/20;
+}
+
+/* Icons */
+.skill-icon {
+  @apply text-4xl text-cyan-400 mb-4 drop-shadow-[0_0_8px_rgba(0,243,255,0.6)];
+}
+
+.skill-badge {
+  @apply inline-block px-3 py-1 rounded-full text-sm font-medium border border-cyan-500/30 bg-cyan-900/30 text-cyan-300;
+}
+
+.tech-badge {
+  @apply px-3 py-1 rounded-full text-xs font-medium border border-cyan-500/30 bg-cyan-900/30 text-cyan-300;
+}
+
+.social-icon {
+  @apply text-gray-400 hover:text-cyan-400 transition-all hover:scale-110 transform hover:drop-shadow-[0_0_8px_rgba(0,243,255,0.8)];
+}
+
+.contact-icon {
+  @apply p-3 rounded-lg bg-gray-800 border border-cyan-500/30 text-cyan-400 shadow-[0_0_10px_rgba(0,243,255,0.1)];
+}
+
+/* Forms */
+.form-input {
+  @apply w-full px-4 py-3 rounded-lg border border-gray-600 bg-gray-800 text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all font-mono;
+}
+
+/* Project images */
+.project-image {
+  @apply relative h-48 overflow-hidden;
+}
+
+.project-overlay {
+  @apply absolute inset-0 bg-black/50 opacity-0 transition-opacity flex items-center justify-center gap-4;
+}
+
+.project-btn {
+  @apply bg-white text-black p-3 rounded-full hover:bg-gray-200 transition-all flex items-center gap-2 font-semibold;
+}
+
+/* Gradient border effect */
+.gradient-border {
+  @apply absolute inset-0 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-2xl opacity-75;
+}
+
+.filter-btn {
+  @apply px-6 py-2 rounded-lg font-bold uppercase tracking-wider transition-all border border-gray-600 bg-gray-800 text-gray-300 hover:border-cyan-400 hover:text-cyan-400;
+}
+
+.filter-btn.active {
+  @apply bg-cyan-900/40 border-cyan-400 text-cyan-400;
+}
+
+/* Scroll to top button */
+.scroll-top {
+  @apply fixed bottom-8 right-8 p-3 rounded-full z-40 transition-all transform hover:scale-110 bg-cyan-900 border border-cyan-400 text-cyan-400 hover:bg-cyan-800 shadow-[0_0_15px_rgba(0,243,255,0.4)];
+}
+
+/* Animated Gradient Background Animations */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradientPulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Responsive Robotic Utilities */
+.section-header-text {
+  font-size: var(--header-size);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .robotic-grid-stack {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .terminal-window-padding {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header-text {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+    line-height: 1;
+  }
+
+  .mobile-text-sm {
+    font-size: 0.75rem !important;
+  }
+  
+  .mobile-tight-layout {
+    gap: 0.75rem !important;
+    padding: 0.75rem !important;
+  }
+  
+  .mobile-stack-force {
+    flex-direction: column !important;
+  }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .section-title {
+    @apply text-3xl mb-12;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    @apply px-6 py-2 text-sm;
+  }
+}
+
+/* Dark mode specific styles */
+.dark {
+  color-scheme: dark;
+}
+
+.dark .project-image {
+  @apply bg-gray-700;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 dark:bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-600 dark:bg-gray-500;
+}
+
+/* Print styles */
+@media print {
+  .navbar,
+  .scroll-top,
+  .filter-btn,
+  .btn-primary,
+  .btn-secondary {
+    display: none;
+  }
+}
+
+/* Custom Animated Cursor */
+body.hide-default-cursor,
+body.hide-default-cursor * {
+  cursor: none !important;
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #3b82f6; /* Tailwind blue-500 */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%); /* Start hidden/centered */
+  transition: opacity 0.3s ease-in-out, transform 0.1s ease-out;
+  box-shadow: 0 0 10px 2px rgba(59, 130, 246, 0.5); /* Glowing dot */
+  will-change: transform;
+}
+
+.custom-cursor-outline {
+  position: fixed;
+  top: -12px;
+  left: -12px;
+  width: 32px;
+  height: 32px;
+  border: 2px solid;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease-in-out, transform 0.15s ease-out, background-color 0.2s, border-color 0.2s;
+  will-change: transform;
+}
+
+/* Fix cursor offset since translate3d modifies from top-left without origin offset in JS */
+.custom-cursor-dot {
+  margin: -4px 0 0 -4px;
+}
+.custom-cursor-outline {
+  margin: 0; /* JS naturally centers this */
+}

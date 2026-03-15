@@ -1,0 +1,29 @@
+{
+  "name": "ayush-portfolio",
+  "version": "1.0.0",
+  "description": "Full Stack Portfolio Website for Ayush Kamboj",
+  "private": true,
+  "main": "backend/server.js",
+  "scripts": {
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm run build\"",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "portfolio",
+    "full-stack",
+    "react",
+    "express",
+    "mongodb",
+    "tailwind"
+  ],
+  "author": "Ayush Kamboj",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  }
+}

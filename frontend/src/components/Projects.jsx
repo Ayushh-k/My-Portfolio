@@ -1,0 +1,306 @@
+import { useState, useRef, useEffect } from "react";
+import { Github, Globe, Code2, Zap, Terminal, Layers, Box, ArrowRight } from "lucide-react";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
+
+const defaultProjects = [
+  {
+    _id: "1",
+    title: "AyurSetu",
+    shortDescription: "Bridge to Wellness",
+    description: "A full-stack web application for optimizing doctor availability and ointment scheduling.",
+    technologies: ["React.js", "Node.js", "Express", "REST API"],
+    metrics: { status: "ACTIVE", complexity: "MODULAR", auth: "0x1A" },
+    githubLink: "https://github.com/Ayushh-k/AyurSetu.git",
+    liveLink: "",
+    category: "Fullstack",
+    color: "#00f3ff"
+  },
+  {
+    _id: "2",
+    title: "Job Tracker",
+    shortDescription: "Career Management System",
+    description: "A web application to organize and track job applications efficiently with company tracking.",
+    technologies: ["React.js", "Node.js", "MySQL"],
+    metrics: { status: "STABLE", complexity: "LINEAR", auth: "0x4C" },
+    githubLink: "https://github.com/Ayushh-k/Job-Application-tracker.git",
+    liveLink: "",
+    category: "fullstack",
+    color: "#10b981"
+  },
+  {
+    _id: "3",
+    title: "Survey Portal",
+    shortDescription: "Data Capture Interface",
+    description: "A web-based survey platform for creating and managing surveys with real-time response analysis.",
+    technologies: ["HTML", "JS", "PHP", "MySQL"],
+    metrics: { status: "LEGACY", complexity: "SIMPLE", auth: "0x9E" },
+    githubLink: "https://github.com/Ayushh-k/SurveyPortal-website.git",
+    liveLink: "#",
+    category: "fullstack",
+    color: "#a78bfa"
+  },
+  {
+    _id: "4",
+    title: "Resource Monitor",
+    shortDescription: "System Telemetry Tool",
+    description: "Real-time tracking of system resources like CPU, memory, and process usage.",
+    technologies: ["Node.js", "Express", "MySQL", "JS"],
+    metrics: { status: "EXPERIMENTAL", complexity: "OPTIMIZED", auth: "0xFF" },
+    githubLink: "https://github.com/Ayushh-k/Resource_Monitoring_System.git",
+    liveLink: "#",
+    category: "fullstack",
+    color: "#fb923c"
+  },
+];
+
+const Projects = ({ isDark }) => {
+  const sectionRef = useScrollAnimation({ animationType: 'up' });
+  const scrollContainerRef = useRef(null);
+  const [selectedFilter, setSelectedFilter] = useState("all");
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Ensure initial scroll position is 0 on mount
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = 0;
+    }
+  }, []);
+
+  const filteredProjects = selectedFilter === "all" 
+    ? defaultProjects 
+    : defaultProjects.filter(p => p.category.toLowerCase() === selectedFilter.toLowerCase());
+
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const firstCard = container.querySelector('.snap-center');
+      if (!firstCard) return;
+
+      const cardWidth = firstCard.offsetWidth + 32;
+      const newIndex = Math.round(container.scrollLeft / cardWidth);
+      
+      if (newIndex !== activeIndex && newIndex >= 0 && newIndex < filteredProjects.length) {
+        setActiveIndex(newIndex);
+      }
+    }
+  };
+
+  const scrollToCard = (index) => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const firstCard = container.querySelector('.snap-center');
+      if (!firstCard) return;
+
+      const cardWidth = firstCard.offsetWidth + 32;
+      container.scrollTo({
+        left: index * cardWidth,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  return (
+    <section
+      id="projects"
+      ref={sectionRef}
+      className={`relative py-32 overflow-hidden transition-colors duration-500 ${isDark ? "bg-[#050b14]" : "bg-gray-50"}`}
+      style={{ willChange: 'transform' }}
+    >
+      {/* Background Decor */}
+      {isDark && (
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent" />
+          <div className="absolute bottom-1/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-500/10 to-transparent" />
+        </div>
+      )}
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-20">
+          <h2 className={`text-5xl md:text-6xl font-black mb-6 tracking-tighter ${isDark ? 'text-white' : 'text-gray-900'} uppercase`}>
+            CORE_MODULES<span className="text-emerald-500">[ ]</span>
+          </h2>
+          <div className="flex items-center justify-center gap-4">
+            <div className="h-px w-12 bg-gray-500/30" />
+            <p className="font-mono text-xs tracking-[0.3em] uppercase text-emerald-500/80">Project Neural Network</p>
+            <div className="h-px w-12 bg-gray-500/30" />
+          </div>
+        </div>
+
+        {/* Filter Tab UI */}
+        <div className="flex flex-wrap gap-4 justify-center mb-16">
+          {["all", "fullstack", "backend", "frontend"].map((filter) => (
+            <button
+              key={filter}
+              onClick={() => {
+                setSelectedFilter(filter);
+                setActiveIndex(0);
+                if (scrollContainerRef.current) scrollContainerRef.current.scrollLeft = 0;
+              }}
+              className={`group relative px-6 py-2 font-mono text-xs tracking-widest uppercase transition-all duration-300 ${
+                selectedFilter === filter ? "text-cyan-500" : "text-gray-500 hover:text-white"
+              }`}
+            >
+              {filter}
+              {selectedFilter === filter && (
+                <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-cyan-500 shadow-[0_0_8px_#06b6d4]" />
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Projects Horizontal Stream */}
+        <div className="relative group/scroll">
+          {/* Scroll Header Decor */}
+          <div className="flex justify-between items-center mb-6 px-2 opacity-50">
+             <div className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="font-mono text-[9px] text-emerald-500 tracking-[0.3em] uppercase">
+                  MODULE_STREAM_READY
+                </span>
+             </div>
+             <div className="flex items-center gap-4">
+               <span className="font-mono text-[8px] text-gray-500 uppercase tracking-widest hidden sm:block">SEGMENT: 0{activeIndex + 1} // 0{filteredProjects.length}</span>
+               <span className="font-mono text-[8px] text-gray-500 uppercase tracking-widest">LOAD_STABILITY: V.95.4</span>
+             </div>
+          </div>
+
+          <div 
+            ref={scrollContainerRef}
+            onScroll={handleScroll}
+            className="flex gap-8 pb-8 overflow-x-auto snap-x snap-mandatory hide-scrollbar"
+            style={{ scrollBehavior: 'smooth' }}
+          >
+            {filteredProjects.map((project, index) => (
+              <div
+                key={project._id}
+                className={`flex-none w-[320px] sm:w-[580px] snap-center relative overflow-hidden group rounded-xl border transition-all duration-500 ${
+                  isDark 
+                  ? 'bg-[#0a101d]/60 border-white/5 backdrop-blur-xl' 
+                  : 'bg-white border-gray-100 shadow-xl'
+                }`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                {/* Header Bar */}
+                <div className="p-4 border-b border-white/5 flex items-center justify-between bg-white/5">
+                  <div className="flex items-center gap-3">
+                    <Terminal size={14} className="text-emerald-500" />
+                    <span className="font-mono text-[10px] tracking-widest text-gray-500 uppercase">
+                      SYS.PROJ_ID_{project.metrics.auth}
+                    </span>
+                  </div>
+                  <div className="flex gap-4">
+                    <a href={project.githubLink} target="_blank" rel="noreferrer" className="text-gray-500 hover:text-white transition-colors">
+                      <Github size={16} />
+                    </a>
+                    {project.liveLink && (
+                      <a href={project.liveLink} target="_blank" rel="noreferrer" className="text-gray-500 hover:text-white transition-colors">
+                        <Globe size={16} />
+                      </a>
+                    )}
+                  </div>
+                </div>
+
+                {/* Main Content */}
+                <div className="p-8">
+                  <div className="flex items-start justify-between mb-6">
+                    <div>
+                      <h3 className={`text-3xl font-black tracking-tighter ${isDark ? 'text-white' : 'text-gray-900'} uppercase group-hover:text-cyan-500 transition-colors duration-300`}>
+                        {project.title}
+                      </h3>
+                      <p className="text-cyan-500/80 font-mono text-[10px] uppercase tracking-widest mt-1">
+                        {project.shortDescription}
+                      </p>
+                    </div>
+                    <div 
+                      className="p-3 rounded-lg border"
+                      style={{ borderColor: `${project.color}40`, backgroundColor: `${project.color}05` }}
+                    >
+                      <Box size={24} style={{ color: project.color }} />
+                    </div>
+                  </div>
+
+                  <p className={`text-sm leading-relaxed mb-8 ${isDark ? 'text-gray-400' : 'text-gray-600'} h-[4rem] line-clamp-3`}>
+                    {project.description}
+                  </p>
+
+                  {/* Tech Stack Chips */}
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {project.technologies.map(tech => (
+                      <span key={tech} className="px-3 py-1 bg-white/5 border border-white/5 text-[9px] font-mono tracking-tighter text-gray-400 uppercase rounded">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Technical Bottom Rail */}
+                  <div className="pt-6 border-t border-white/5 flex flex-wrap gap-6">
+                    <div className="flex flex-col">
+                      <span className="text-[8px] font-mono text-gray-500 uppercase tracking-widest">STATUS</span>
+                      <span 
+                        className="text-[10px] font-black font-mono tracking-widest mt-1"
+                        style={{ color: project.color }}
+                      >
+                        {project.metrics.status}
+                      </span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[8px] font-mono text-gray-500 uppercase tracking-widest">ARCHITECTURE</span>
+                      <span className="text-[10px] font-black font-mono tracking-widest text-white mt-1">
+                        {project.metrics.complexity}
+                      </span>
+                    </div>
+                    <div className="ml-auto flex items-center h-full pt-2">
+                       <ArrowRight className="text-emerald-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Hover Scanline Effect */}
+                <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-10 transition-opacity duration-700 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]" />
+              </div>
+            ))}
+          </div>
+
+          {/* Dot Form Pagination */}
+          <div className="flex justify-center items-center gap-3 mt-8">
+            {filteredProjects.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollToCard(i)}
+                className={`transition-all duration-500 rounded-full ${
+                  activeIndex === i 
+                  ? 'w-8 h-1.5 bg-gradient-to-r from-emerald-500 to-cyan-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' 
+                  : 'w-1.5 h-1.5 bg-gray-700 hover:bg-gray-500'
+                }`}
+                aria-label={`Go to project ${i + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Grid Background Micro-Decor */}
+        <div className="mt-32 border-t border-white/5 pt-12 flex justify-between items-center px-4 opacity-20">
+          <div className="flex items-center gap-4 text-gray-500 font-mono text-[9px] tracking-widest uppercase">
+            <Zap size={12} /> Buffer_Overflow: NEGATIVE
+          </div>
+          <div className="font-mono text-[9px] tracking-widest text-gray-500 uppercase">
+            Load_Sequence_Complete
+          </div>
+        </div>
+      </div>
+      
+      <style dangerouslySetInnerHTML={{ __html: `
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}} />
+    </section>
+  );
+};
+
+export default Projects;
