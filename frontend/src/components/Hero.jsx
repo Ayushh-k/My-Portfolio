@@ -51,12 +51,12 @@ const Hero = ({ isDark, toggleDarkMode }) => {
 
             {/* Social icons */}
             <div className="flex gap-6">
-              <a href="https://github.com/ayushkamboj" target="_blank" rel="noreferrer"
+              <a href="https://github.com/Ayushh-k" target="_blank" rel="noreferrer"
                 className="text-white hover:scale-110 transition-all duration-300"
                 style={{ filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.5))' }}>
                 <Github size={24} />
               </a>
-              <a href="https://linkedin.com/in/ayushkamboj" target="_blank" rel="noreferrer"
+              <a href="https://www.linkedin.com/in/aayush-kamboj" target="_blank" rel="noreferrer"
                 className="text-[#0077b5] hover:scale-110 transition-all duration-300"
                 style={{ filter: 'drop-shadow(0 0 10px rgba(0,119,181,0.6))' }}>
                 <Linkedin size={24} />
