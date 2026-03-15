@@ -64,10 +64,10 @@ const Platforms = ({ isDark }) => {
           {/* Header Pulse Effect */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-cyan-500/10 rounded-full blur-[50px] pointer-events-none" />
           
-          <h2 className={`text-4xl md:text-6xl font-black mb-6 tracking-tighter ${isDark ? 'text-white' : 'text-gray-900'} uppercase`}>
+          <h2 className={`text-3xl sm:text-4xl md:text-6xl font-black mb-6 tracking-tighter ${isDark ? 'text-white' : 'text-gray-900'} uppercase break-words`}>
             ALGO_ARENAS<span className="text-cyan-500">_v2</span>
           </h2>
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-2 sm:gap-4">
             <div className="h-px w-12 bg-gray-500/30" />
             <p className="font-mono text-[10px] sm:text-xs tracking-[0.1em] sm:tracking-[0.3em] uppercase text-cyan-500/80">Competitive Coding Nodes</p>
             <div className="h-px w-12 bg-gray-500/30" />
