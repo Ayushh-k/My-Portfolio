@@ -1,8 +1,10 @@
 import Skill from '../models/Skill.js';
+import connectDB from '../config/database.js';
 
 // Get all skills
 export const getAllSkills = async (req, res) => {
   try {
+    await connectDB();
     const { category } = req.query;
     let query = {};
 

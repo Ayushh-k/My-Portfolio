@@ -1,8 +1,10 @@
 import Certificate from '../models/Certificate.js';
+import connectDB from '../config/database.js';
 
 // Get all certificates
 export const getAllCertificates = async (req, res) => {
   try {
+    await connectDB();
     const certificates = await Certificate.find().sort({ year: -1, order: 1 });
     res.status(200).json({
       success: true,

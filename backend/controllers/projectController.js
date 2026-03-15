@@ -1,8 +1,10 @@
 import Project from '../models/Project.js';
+import connectDB from '../config/database.js';
 
 // Get all projects
 export const getAllProjects = async (req, res) => {
   try {
+    await connectDB();
     const { category, featured } = req.query;
     let query = {};
 

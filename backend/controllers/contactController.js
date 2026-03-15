@@ -1,11 +1,15 @@
 import Contact from '../models/Contact.js';
 import nodemailer from 'nodemailer';
 import { generateUserConfirmationEmail, generateAdminNotificationEmail } from '../utils/emailTemplates.js';
+import connectDB from '../config/database.js'; // Ensure connection in serverless
 
 
 // Submit contact form
 export const submitContact = async (req, res) => {
   try {
+    // Await DB connection explicitly for Vercel's serverless environment
+    await connectDB();
+
     const { name, email, subject, message } = req.body;
 
     // Validation
