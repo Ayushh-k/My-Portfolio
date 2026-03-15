@@ -76,4 +76,6 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
+// Force Vercel to rebuild and sync variables
+
 export default app;
