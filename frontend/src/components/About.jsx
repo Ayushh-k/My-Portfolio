@@ -12,8 +12,8 @@ const developer = {
   class: "B.Tech_CS",
   origin: "LPU_India",
   status: "ACTIVE_SYNC",
-  focus: ["MERN", "System_Arch"],
-  mission: "ENGINEER_INNOVATION"
+  focus: ["MERN", "DSA", "JDBC", "Mongoose"],
+  mission: "ENGINEER_EFFICIENT_SYSTEMS"
 };
 
 // HANDSHAKE_COMPLETE
@@ -59,12 +59,12 @@ developer.execute_biography();`;
                <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-cyan-500 translate-x-1 translate-y-1" />
                
               <h3 className={`text-3xl font-black mb-8 leading-tight tracking-tighter ${isDark ? 'text-white' : 'text-gray-900'} uppercase`}>
-                High-Performance <br/>Software <span className="text-emerald-500">Architect</span>
+                Full Stack <br/>Web <span className="text-emerald-500">Developer</span>
               </h3>
               
               <div className="space-y-6">
                 <p className={`font-mono text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                  Handshake initiated. I am Ayush Kamboj, a B.Tech Computer Science engineer currently interfacing at Lovely Professional University. My central processor is optimized for Full Stack development, with a primary mission to architect scalable, resilient digital ecosystems.
+                  Handshake initiated. I am Ayush Kamboj, a B.Tech Computer Science engineer currently interfacing at Lovely Professional University. My central processor is optimized for Full Stack Web Development, with strong proficiency in Data Structures & Algorithms, JDBC, and Mongoose for scalable database integration.
                 </p>
                 {/* Spec Sheet Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">

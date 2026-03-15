@@ -73,12 +73,12 @@ const Contact = ({ isDark }) => {
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div className="text-center mb-24">
-          <h2 className={`text-5xl md:text-6xl font-black mb-6 tracking-tighter ${isDark ? 'text-white' : 'text-gray-900'} uppercase`}>
+          <h2 className={`text-4xl md:text-6xl font-black mb-6 tracking-tighter ${isDark ? 'text-white' : 'text-gray-900'} uppercase`}>
             UPLINK_COMM_LINK<span className="text-cyan-500">.exe</span>
           </h2>
           <div className="flex items-center justify-center gap-4">
             <div className="h-px w-12 bg-gray-500/30" />
-            <p className="font-mono text-xs tracking-[0.3em] uppercase text-cyan-500/80">Secure Transmission Portal</p>
+            <p className="font-mono text-[10px] sm:text-xs tracking-[0.1em] sm:tracking-[0.3em] uppercase text-cyan-500/80">Secure Transmission Portal</p>
             <div className="h-px w-12 bg-gray-500/30" />
           </div>
         </div>

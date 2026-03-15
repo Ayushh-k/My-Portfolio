@@ -81,7 +81,7 @@ const Preloader = () => {
         <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyan-500 z-20" />
 
         {/* Header Unit */}
-        <div className="flex items-center justify-between px-6 py-4 bg-cyan-500/5 border-b border-cyan-500/20">
+        <div className="flex items-center justify-between px-4 md:px-6 py-3 md:py-4 bg-cyan-500/5 border-b border-cyan-500/20">
           <div className="flex items-center gap-3">
             <Cpu className="w-4 h-4 text-cyan-400 animate-pulse" />
             <span className="text-[10px] font-mono text-cyan-400 tracking-[0.3em] uppercase opacity-70">Boot_System.v2</span>
@@ -97,7 +97,7 @@ const Preloader = () => {
         </div>
 
         {/* Log Stream */}
-        <div className="px-8 py-10 min-h-[300px] font-mono text-xs space-y-2 relative">
+        <div className="px-4 md:px-8 py-6 md:py-10 min-h-[250px] md:min-h-[300px] font-mono text-[10px] sm:text-xs space-y-2 relative">
           {BOOT_LOGS.map((log, i) => (
             <div
               key={i}
@@ -114,7 +114,7 @@ const Preloader = () => {
 
           {showSuccess && (
             <div className="mt-8 animate-[fadeIn_0.5s_ease-out_forwards]">
-              <div className="flex items-center gap-2 text-white font-black italic text-xl tracking-tighter uppercase">
+              <div className="flex items-center gap-2 text-white font-black italic text-base sm:text-xl tracking-tighter uppercase">
                 <ShieldCheck className="w-6 h-6 text-cyan-400" />
                 SYSTEM_INITIALIZED_✓
               </div>
@@ -124,7 +124,7 @@ const Preloader = () => {
         </div>
 
         {/* Energy Capacity Gauge (Progress Bar) */}
-        <div className="px-8 py-6 bg-cyan-500/5 border-t border-cyan-500/10">
+        <div className="px-4 md:px-8 py-4 md:py-6 bg-cyan-500/5 border-t border-cyan-500/10">
           <div className="flex justify-between items-end mb-3">
             <div>
               <div className="text-[9px] font-mono text-cyan-500/50 uppercase tracking-widest mb-1">Energy_Load_Ratio</div>
@@ -171,8 +171,8 @@ const Preloader = () => {
       </div>
 
       {/* Global Status Footer */}
-      <div className="mt-12 flex flex-col items-center gap-2 transition-all duration-500">
-        <div className="flex items-center gap-6 opacity-40">
+      <div className="mt-8 md:mt-12 flex flex-col items-center gap-2 transition-all duration-500 px-4 text-center">
+        <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6 opacity-40">
            <div className="flex items-center gap-2">
              <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-ping" />
              <span className="text-[10px] font-mono text-white tracking-widest uppercase">SYSCALL_READY</span>
@@ -183,7 +183,7 @@ const Preloader = () => {
              <span className="text-[10px] font-mono text-white tracking-widest uppercase">BIOMETRIC_SYNC</span>
            </div>
         </div>
-        <div className={`mt-4 text-2xl font-black italic tracking-tighter uppercase transition-opacity duration-300 ${isExiting ? 'opacity-0' : 'opacity-100'}`}>
+        <div className={`mt-4 text-lg md:text-2xl font-black italic tracking-tighter uppercase transition-opacity duration-300 ${isExiting ? 'opacity-0' : 'opacity-100'}`}>
           AYUSH_<span className="text-cyan-400">KAMBOJ</span>.sys
         </div>
       </div>

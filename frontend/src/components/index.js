@@ -16,3 +16,4 @@ export { default as SectionDivider } from './SectionDivider';
 export { default as WaveBackground } from './WaveBackground';
 export { default as CustomCursor } from './CustomCursor';
 export { default as TypoLoop } from './TypoLoop';
+export { default as Platforms } from './Platforms';

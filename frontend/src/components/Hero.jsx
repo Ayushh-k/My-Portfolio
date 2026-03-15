@@ -83,11 +83,11 @@ const Hero = ({ isDark, toggleDarkMode }) => {
               <span className="w-8 h-px bg-cyan-400"></span> Introduction
             </p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-semibold text-white mb-6 leading-[1.2]">
-              Full Stack Developer &<br />System Builder.
+              Full Stack Web Dev &<br />DSA Enthusiast.
             </h2>
             <p className="text-gray-400 mb-12 text-sm md:text-base leading-relaxed font-mono">
-              Based in India. I specialize in robust backend architectures, 
-              scalable systems, and crafting pixel-perfect interactive web experiences.
+              Based in India. I specialize in robust MERN stack applications,
+              database management with JDBC & Mongoose, and solving complex algorithmic challenges.
             </p>
 
             <div className="flex flex-row items-center gap-6 mt-0">

@@ -16,22 +16,13 @@ import {
   WaveBackground,
   CustomCursor,
   TypoLoop,
+  Platforms,
 } from "./components";
 
 function App() {
-  const [isDark, setIsDark] = useState(() => {
-    // Always default to dark mode for futuristic theme
-    const saved = localStorage.getItem("darkMode");
-    if (saved !== null) {
-      return JSON.parse(saved);
-    }
-    return true; // Default to dark mode
-  });
+  const [isDark, setIsDark] = useState(true); // Strictly default to dark mode
 
   useEffect(() => {
-    // Save preference to localStorage
-    localStorage.setItem("darkMode", JSON.stringify(isDark));
-
     // Update document class
     if (isDark) {
       document.documentElement.classList.add("dark");
@@ -73,6 +64,7 @@ function App() {
           <Education isDark={isDark} />
           <Projects isDark={isDark} />
           <GitHubStats isDark={isDark} username="Ayushh-k" />
+          <Platforms isDark={isDark} />
           <Certifications isDark={isDark} />
           <Contact isDark={isDark} />
           <Footer isDark={isDark} />

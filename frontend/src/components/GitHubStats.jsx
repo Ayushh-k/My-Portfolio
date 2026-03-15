@@ -142,7 +142,7 @@ const GitHubStats = ({ isDark, username = 'YOUR_GITHUB_USERNAME' }) => {
                 
                 <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-2 italic uppercase tracking-tighter">
                   <Code className="w-5 h-5 text-cyan-400" />
-                  Proficiency_Matrix.exe
+                  Web_&_DSA_Matrix.exe
                 </h3>
                 
                 <div className="space-y-8">

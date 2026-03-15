@@ -31,6 +31,7 @@ const Skills = ({ isDark }) => {
     Frontend: Palette,
     Backend: Server,
     Databases: Database,
+    'Data Structures': Activity,
     Tools: Wrench,
     'Version Control': GitBranch
   };
@@ -40,6 +41,7 @@ const Skills = ({ isDark }) => {
     Frontend: '#00f3ff', // Cyan
     Backend: '#10b981', // Emerald
     Databases: '#a78bfa', // Violet
+    'Data Structures': '#ef4444', // Red
     Tools: '#fb923c', // Orange
     'Version Control': '#f472b6' // Pink
   };
@@ -60,13 +62,20 @@ const Skills = ({ isDark }) => {
     Backend: [
       { name: 'Node.js', proficiency: 'Advanced' },
       { name: 'Express.js', proficiency: 'Advanced' },
-      { name: 'Laravel', proficiency: 'Intermediate' },
+      { name: 'JDBC', proficiency: 'Advanced' },
       { name: 'REST APIs', proficiency: 'Advanced' }
     ],
     Databases: [
+      { name: 'MongoDB', proficiency: 'Expert' },
+      { name: 'Mongoose', proficiency: 'Expert' },
       { name: 'MySQL', proficiency: 'Advanced' },
-      { name: 'MongoDB', proficiency: 'Advanced' },
       { name: 'PostgreSQL', proficiency: 'Intermediate' }
+    ],
+    'Data Structures': [
+      { name: 'Arrays & Strings', proficiency: 'Expert' },
+      { name: 'Linked Lists', proficiency: 'Advanced' },
+      { name: 'Trees & Graphs', proficiency: 'Advanced' },
+      { name: 'Dynamic Prog.', proficiency: 'Intermediate' }
     ],
     Tools: [
       { name: 'Git', proficiency: 'Advanced' },
@@ -137,7 +146,7 @@ const Skills = ({ isDark }) => {
       className={`relative py-32 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-[#050b14]' : 'bg-gray-50'}`}
       style={{ willChange: 'transform' }}
     >
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div ref={skillsRef} className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-24">
           <h2 className={`font-black mb-6 tracking-tighter ${isDark ? 'text-white' : 'text-gray-900'} uppercase section-header-text text-5xl md:text-6xl`}>
             THE_TECH_ARSENAL<span className="text-amber-500">.v4</span>
@@ -234,7 +243,7 @@ const Skills = ({ isDark }) => {
                           
                           <div className={`h-1.5 rounded-full overflow-hidden relative ${isDark ? 'bg-white/5' : 'bg-gray-100'}`}>
                              <div 
-                               className="skill-bar-fill h-full rounded-full relative overflow-hidden"
+                               className="skill-bar-fill h-full rounded-full relative overflow-hidden w-0 transition-all duration-1000 ease-out"
                                style={{ 
                                  '--width': `${width}%`,
                                  backgroundColor: color,
