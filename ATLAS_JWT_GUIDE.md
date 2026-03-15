@@ -28,6 +28,7 @@ Since Vercel is in the cloud, it cannot connect to your computer's `localhost`. 
    - Replace `<username>` with the username you created in step 3.
    - Replace `<pwd>` with the password you copied in step 3. 
    - **Important**: Do not include the `<` or `>` brackets.
+   - **Important**: If your password contains an `@` symbol (or other special characters like `#` or `?`), you MUST URL-encode it, otherwise MongoDB will cut off the connection string early. For example, replace `@` with `%40`. If your password is `Ak@123`, you must type `Ak%40123`.
    - *Optional:* Add `/portfolio` right before the `?` so it creates a specific database called "portfolio". Example:
      `mongodb+srv://ayush:MyPassword123@cluster0.xxxxx.mongodb.net/portfolio?retryWrites=true&w=majority`
 
