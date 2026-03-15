@@ -1,32 +1,39 @@
 import mongoose from 'mongoose';
 
-// Ensure we don't hold multiple connections open in the serverless environment
-let isConnected = false; 
+// Global cache for serverless environments
+let cachedConnection = null;
 
 const connectDB = async () => {
-  if (isConnected) {
-    console.log('MongoDB is already connected.');
-    return;
+  // If we have a cached connection, use it
+  if (cachedConnection && mongoose.connection.readyState === 1) {
+    console.log('Using existing MongoDB connection');
+    return cachedConnection;
   }
 
   try {
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio';
+    const mongoURI = process.env.MONGODB_URI;
     
-    // Connect to database
+    // Explicitly missing URI check
+    if (!mongoURI) {
+      console.error('CRITICAL: MONGODB_URI environment variable is missing!');
+      throw new Error('MONGODB_URI environment variable is missing.');
+    }
+
+    console.log('Establishing new MongoDB connection...');
     const conn = await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+      serverSelectionTimeoutMS: 5000,
+      bufferCommands: false, // Disabling buffering forces it to throw the real error immediately instead of timing out
     });
 
-    isConnected = conn.connections[0].readyState === 1;
-    console.log(`MongoDB connected: ${conn.connection.host}`);
-    return conn;
+    cachedConnection = conn.connection;
+    console.log(`MongoDB connected successfully to cluster: ${conn.connection.host}`);
+    return cachedConnection;
   } catch (error) {
-    console.warn(`⚠️  MongoDB Connection Error: ${error.message}`);
-    console.warn('Server will continue running, but database features may be unavailable');
-    console.warn('Make sure MongoDB is running on localhost:27017 or update MONGODB_URI in .env');
-    // If we throw here, Vercel will crash the function. We want to fail gracefully.
+    console.error(`MongoDB Connection Error: ${error.message}`);
+    // We throw the error so the API endpoint fails immediately with the real reason
+    throw error;
   }
 };
 
