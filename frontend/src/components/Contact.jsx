@@ -73,10 +73,10 @@ const Contact = ({ isDark }) => {
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div className="text-center mb-24">
-          <h2 className={`text-4xl md:text-6xl font-black mb-6 tracking-tighter ${isDark ? 'text-white' : 'text-gray-900'} uppercase`}>
+          <h2 className={`text-3xl sm:text-4xl md:text-6xl font-black mb-6 tracking-tighter ${isDark ? 'text-white' : 'text-gray-900'} uppercase break-words`}>
             UPLINK_COMM_LINK<span className="text-cyan-500">.exe</span>
           </h2>
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-2 sm:gap-4">
             <div className="h-px w-12 bg-gray-500/30" />
             <p className="font-mono text-[10px] sm:text-xs tracking-[0.1em] sm:tracking-[0.3em] uppercase text-cyan-500/80">Secure Transmission Portal</p>
             <div className="h-px w-12 bg-gray-500/30" />
@@ -107,10 +107,10 @@ const Contact = ({ isDark }) => {
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[8px] font-mono text-gray-500 uppercase tracking-widest">{item.label}</span>
-                      <span className={`text-sm font-bold ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{item.val}</span>
+                        <span className={`text-xs sm:text-sm font-bold truncate ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{item.val}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
 
@@ -212,16 +212,16 @@ const Contact = ({ isDark }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`group relative w-full py-4 bg-transparent border-2 border-cyan-500 font-mono text-xs tracking-[0.4em] font-black uppercase overflow-hidden transition-all duration-500 hover:shadow-[0_0_30px_rgba(6,182,212,0.3)] ${loading ? 'cursor-wait' : ''}`}
+                className={`group relative w-full py-4 bg-transparent border-2 border-cyan-500 font-mono text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.4em] font-black uppercase overflow-hidden transition-all duration-500 hover:shadow-[0_0_30px_rgba(6,182,212,0.3)] ${loading ? 'cursor-wait' : ''}`}
               >
                 <div className={`absolute inset-0 bg-cyan-500 transition-transform duration-500 ${loading ? 'translate-y-0' : 'translate-y-full group-hover:translate-y-0'}`} />
                 <span className={`relative flex items-center justify-center gap-3 transition-colors duration-500 ${loading ? 'text-white' : 'text-cyan-500 group-hover:text-white'}`}>
                   {loading ? (
-                    <>SYNCING_DATA_STREAMS...</>
+                    <span className="truncate px-2">SYNCING_DATA_STREAMS...</span>
                   ) : (
-                    <>
-                      <Send size={14} /> TRANSMIT_DATA_PKT.send()
-                    </>
+                    <span className="flex items-center justify-center gap-2 sm:gap-3 truncate px-2">
+                      <Send size={14} className="shrink-0" /> TRANSMIT_DATA_PKT.send()
+                    </span>
                   )}
                 </span>
                 
