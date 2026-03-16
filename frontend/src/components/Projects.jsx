@@ -2,18 +2,82 @@ import { useState, useRef, useEffect } from "react";
 import { Github, Globe, Code2, Zap, Terminal, Layers, Box, ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
+// Auto-scrolling image carousel for project cards
+const ProjectCarousel = ({ images, color }) => {
+  const [current, setCurrent] = useState(0);
+  const timerRef = useRef(null);
+
+  const startTimer = () => {
+    timerRef.current = setInterval(() => {
+      setCurrent(prev => (prev + 1) % images.length);
+    }, 2500);
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => clearInterval(timerRef.current);
+  }, [images.length]);
+
+  const goTo = (i) => {
+    clearInterval(timerRef.current);
+    setCurrent(i);
+    startTimer();
+  };
+
+  return (
+    <div className="relative w-full overflow-hidden rounded-lg" style={{ aspectRatio: '16/9' }}>
+      {images.map((src, i) => (
+        <img
+          key={i}
+          src={src}
+          alt={`Screenshot ${i + 1}`}
+          className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700"
+          style={{ opacity: i === current ? 1 : 0 }}
+          draggable={false}
+        />
+      ))}
+      {/* Overlay gradient at bottom */}
+      <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+      {/* Dot indicators */}
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            className="rounded-full transition-all duration-300"
+            style={{
+              width: i === current ? '16px' : '5px',
+              height: '5px',
+              backgroundColor: i === current ? color : 'rgba(255,255,255,0.4)',
+              boxShadow: i === current ? `0 0 6px ${color}` : 'none',
+            }}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const defaultProjects = [
   {
     _id: "1",
     title: "AyurSetu",
     shortDescription: "Bridge to Wellness",
-    description: "A full-stack web application for optimizing doctor availability and ointment scheduling.",
+    description: "A full-stack web application for optimizing doctor availability and appointment scheduling.",
     technologies: ["React.js", "Node.js", "Express", "REST API"],
     metrics: { status: "ACTIVE", complexity: "MODULAR", auth: "0x1A" },
     githubLink: "https://github.com/Ayushh-k/AyurSetu.git",
-    liveLink: "",
+    liveLink: "https://ayur-setu-v1u5.vercel.app",
     category: "Fullstack",
-    color: "#00f3ff"
+    color: "#00f3ff",
+    images: [
+      "/images/ayursetu-1.png",
+      "/images/ayursetu-2.png",
+      "/images/ayursetu-3.png",
+      "/images/ayursetu-4.png",
+      "/images/ayursetu-5.png",
+    ]
   },
   {
     _id: "2",
@@ -219,6 +283,13 @@ const Projects = ({ isDark }) => {
                       <Box size={24} style={{ color: project.color }} />
                     </div>
                   </div>
+
+                  {/* Image Carousel — shown only for projects with images */}
+                  {project.images && project.images.length > 0 && (
+                    <div className="mb-6">
+                      <ProjectCarousel images={project.images} color={project.color} />
+                    </div>
+                  )}
 
                   <p className={`text-sm leading-relaxed mb-8 ${isDark ? 'text-gray-400' : 'text-gray-600'} h-[4rem] line-clamp-3`}>
                     {project.description}
