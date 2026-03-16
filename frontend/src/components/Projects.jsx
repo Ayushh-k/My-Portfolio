@@ -89,7 +89,12 @@ const defaultProjects = [
     githubLink: "https://github.com/Ayushh-k/Job-Application-tracker.git",
     liveLink: "",
     category: "fullstack",
-    color: "#10b981"
+    color: "#10b981",
+    images: [
+      "/images/jobtracker-1.png",
+      "/images/jobtracker-2.png",
+      "/images/jobtracker-3.png",
+    ]
   },
   {
     _id: "3",
@@ -101,7 +106,12 @@ const defaultProjects = [
     githubLink: "https://github.com/Ayushh-k/SurveyPortal-website.git",
     liveLink: "#",
     category: "fullstack",
-    color: "#a78bfa"
+    color: "#a78bfa",
+    images: [
+      "/images/survey-1.png",
+      "/images/survey-2.png",
+      "/images/survey-3.png",
+    ]
   },
   {
     _id: "4",
@@ -113,7 +123,12 @@ const defaultProjects = [
     githubLink: "https://github.com/Ayushh-k/Resource_Monitoring_System.git",
     liveLink: "#",
     category: "fullstack",
-    color: "#fb923c"
+    color: "#fb923c",
+    images: [
+      "/images/monitor-1.png",
+      "/images/monitor-2.png",
+      "/images/monitor-3.png",
+    ]
   },
 ];
 
