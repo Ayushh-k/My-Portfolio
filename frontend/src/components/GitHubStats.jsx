@@ -2,6 +2,28 @@ import { useState, useEffect } from 'react';
 import { ExternalLink, Star, GitBranch, Code, ShieldCheck, Cpu, Database, Activity, Terminal } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
+// Static fallback used when GitHub API rate-limits or fails
+const FALLBACK_STATS = {
+  publicRepos: 12,
+  followers: 8,
+  totalStars: 3,
+};
+const FALLBACK_REPOS = [
+  { id: 1, name: 'AyurSetu', description: 'Full-stack web app for doctor availability and appointment scheduling.', html_url: 'https://github.com/Ayushh-k/AyurSetu', language: 'JavaScript', stargazers_count: 1 },
+  { id: 2, name: 'Job_Application_Tracker', description: 'Track job applications, statuses, and company details in one place.', html_url: 'https://github.com/Ayushh-k/Job-Application-tracker', language: 'JavaScript', stargazers_count: 0 },
+  { id: 3, name: 'SurveyPortal_Website', description: 'Web-based survey platform using PHP, MySQL, HTML/CSS/JS.', html_url: 'https://github.com/Ayushh-k/SurveyPortal-website', language: 'PHP', stargazers_count: 1 },
+  { id: 4, name: 'Resource_Monitoring_System', description: 'Real-time system resource monitoring dashboard with Node.js backend.', html_url: 'https://github.com/Ayushh-k/Resource_Monitoring_System', language: 'JavaScript', stargazers_count: 1 },
+  { id: 5, name: 'Portfolio', description: 'Personal developer portfolio — MERN stack, futuristic theme.', html_url: 'https://github.com/Ayushh-k', language: 'JavaScript', stargazers_count: 0 },
+  { id: 6, name: 'DSA_Practice', description: 'Data structures & algorithms solutions in Java.', html_url: 'https://github.com/Ayushh-k', language: 'Java', stargazers_count: 0 },
+];
+const FALLBACK_LANGS = [
+  { name: 'JavaScript', percentage: 55 },
+  { name: 'Java', percentage: 25 },
+  { name: 'PHP', percentage: 10 },
+  { name: 'SQL', percentage: 7 },
+  { name: 'HTML', percentage: 3 },
+];
+
 const GitHubStats = ({ isDark, username = 'YOUR_GITHUB_USERNAME' }) => {
   const [stats, setStats] = useState(null);
   const [repos, setRepos] = useState([]);
@@ -48,11 +70,11 @@ const GitHubStats = ({ isDark, username = 'YOUR_GITHUB_USERNAME' }) => {
           bio: userData.bio,
         });
         
-        setRepos(reposData.slice(0, 6)); // Top 6 repos
+        setRepos(reposData.slice(0, 6));
         setLanguages(
           Object.entries(languageMap)
             .sort((a, b) => b[1] - a[1])
-            .slice(0, 5) // Top 5 languages
+            .slice(0, 5)
             .map(([lang, count]) => ({
               name: lang,
               percentage: Math.round((count / totalRepoCount) * 100)
@@ -61,8 +83,12 @@ const GitHubStats = ({ isDark, username = 'YOUR_GITHUB_USERNAME' }) => {
 
         setError(null);
       } catch (err) {
-        console.error('Error fetching GitHub data:', err);
-        setError('OFFLINE_PROTOCOL_FAILURE: Check connection or API ceiling.');
+        // API failed (rate limit etc.) — silently load fallback data
+        console.warn('GitHub API unavailable, using fallback data:', err.message);
+        setStats(FALLBACK_STATS);
+        setRepos(FALLBACK_REPOS);
+        setLanguages(FALLBACK_LANGS);
+        setError(null);
       } finally {
         setLoading(false);
       }
@@ -71,7 +97,10 @@ const GitHubStats = ({ isDark, username = 'YOUR_GITHUB_USERNAME' }) => {
     if (username && username !== 'YOUR_GITHUB_USERNAME') {
       fetchGitHubData();
     } else {
-      setError('AUTH_ERROR: GitHub node ID not provided.');
+      // No username configured — load fallback silently
+      setStats(FALLBACK_STATS);
+      setRepos(FALLBACK_REPOS);
+      setLanguages(FALLBACK_LANGS);
       setLoading(false);
     }
   }, [username]);

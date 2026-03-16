@@ -1,9 +1,11 @@
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Cpu, Database, Fingerprint, Terminal as TerminalIcon, ShieldCheck } from 'lucide-react';
 
 const About = ({ isDark }) => {
   const sectionRef = useScrollAnimation({ animationType: 'up' });
+  const visibilityRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
   const [displayedCode, setDisplayedCode] = useState('');
 
   const codeText = `// INITIALIZING_HANDSHAKE
@@ -19,7 +21,24 @@ const developer = {
 // HANDSHAKE_COMPLETE
 developer.execute_biography();`;
 
+  // Trigger typing only when section scrolls into view
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.25 }
+    );
+    if (visibilityRef.current) observer.observe(visibilityRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Start typing once visible
+  useEffect(() => {
+    if (!isVisible) return;
     let index = 0;
     const interval = setInterval(() => {
       if (index < codeText.length) {
@@ -29,14 +48,13 @@ developer.execute_biography();`;
         clearInterval(interval);
       }
     }, 20);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [isVisible]);
 
   return (
     <section
       id="about"
-      ref={sectionRef}
+      ref={(el) => { sectionRef.current = el; visibilityRef.current = el; }}
       className={`relative py-32 overflow-hidden transition-colors duration-500 ${isDark ? "bg-[#050b14]" : "bg-white"}`}
     >
       <div className="max-w-7xl mx-auto px-6 relative z-10">

@@ -1,8 +1,43 @@
 import { MapPin, Calendar, Cpu, ShieldCheck, Zap } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { useState, useEffect, useRef } from 'react';
 
 const Education = ({ isDark }) => {
   const sectionRef = useScrollAnimation({ animationType: 'up' });
+  const visibilityRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const subtitleFull = 'Educational Matrix';
+  const [subtitle, setSubtitle] = useState('');
+
+  // Fire IntersectionObserver once — sets isVisible when section enters view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    if (visibilityRef.current) observer.observe(visibilityRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Type out subtitle when visible
+  useEffect(() => {
+    if (!isVisible) return;
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < subtitleFull.length) {
+        setSubtitle(subtitleFull.substring(0, i + 1));
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 55);
+    return () => clearInterval(interval);
+  }, [isVisible]);
 
   const educationData = [
     {
@@ -43,7 +78,7 @@ const Education = ({ isDark }) => {
   return (
     <section
       id="education"
-      ref={sectionRef}
+      ref={(el) => { sectionRef.current = el; visibilityRef.current = el; }}
       className={`relative py-32 overflow-hidden transition-colors duration-500 ${isDark ? 'bg-[#050b14]' : 'bg-gray-50'}`}
     >
       {/* Background Decor */}
@@ -62,7 +97,9 @@ const Education = ({ isDark }) => {
           </h2>
           <div className="flex items-center justify-center gap-4">
             <div className="h-px w-12 bg-gray-500/30" />
-            <p className="font-mono text-xs tracking-[0.3em] uppercase text-cyan-500/80">Educational Matrix</p>
+            <p className="font-mono text-xs tracking-[0.3em] uppercase text-cyan-500/80">
+              {subtitle}<span className={`inline-block w-[2px] h-3 ml-0.5 bg-cyan-400 align-middle ${subtitle.length < subtitleFull.length ? 'animate-pulse' : 'opacity-0'}`} />
+            </p>
             <div className="h-px w-12 bg-gray-500/30" />
           </div>
         </div>
