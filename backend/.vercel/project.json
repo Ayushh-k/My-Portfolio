@@ -1,0 +1,16 @@
+{
+  "projectId": "prj_aF6RZyVWnaGooyMyNzLBGJ8uzFOv",
+  "orgId": "team_SfqzobUnLrW6XxYVo2W7SeQK",
+  "projectName": "backend",
+  "settings": {
+    "createdAt": 1773600031804,
+    "framework": null,
+    "devCommand": null,
+    "installCommand": null,
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": null,
+    "directoryListing": false,
+    "nodeVersion": "24.x"
+  }
+}

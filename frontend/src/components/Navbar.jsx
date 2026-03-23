@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
+import BugGame from './BugGame';
 
 const Navbar = ({ isDark, toggleDarkMode }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -62,6 +63,7 @@ const Navbar = ({ isDark, toggleDarkMode }) => {
 
         {/* Right controls */}
         <div className="flex items-center gap-4">
+          <BugGame />
           <button
             onClick={toggleDarkMode}
             className={`p-2 rounded-lg bg-white/5 ${effectiveIsDark ? 'text-gray-400 hover:text-cyan-400' : 'text-gray-600 hover:text-cyan-600'} transition-colors duration-500`}
