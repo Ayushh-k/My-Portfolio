@@ -16,7 +16,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-particles": "^2.12.2",
-    "three": "^0.183.2",
     "tsparticles-slim": "^2.12.0"
   },
   "devDependencies": {
