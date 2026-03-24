@@ -9,6 +9,7 @@ import projectRoutes from './routes/projectRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import skillRoutes from './routes/skillRoutes.js';
 import certificateRoutes from './routes/certificateRoutes.js';
+import interactionRoutes from './routes/interactionRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -44,6 +45,7 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/skills', skillRoutes);
 app.use('/api/certificates', certificateRoutes);
+app.use('/api/interactions', interactionRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
