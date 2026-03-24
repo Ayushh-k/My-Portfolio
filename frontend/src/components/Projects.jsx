@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { Github, Globe, Code2, Zap, Terminal, Layers, Box, ArrowRight, Heart, MessageCircle, Send } from "lucide-react";
+import { Github, Globe, Code2, Zap, Terminal, Layers, Box, ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "../hooks/useScrollAnimation";
-import { interactionAPI } from '../api/axiosConfig';
 
 // Auto-scrolling image carousel for project cards
 const ProjectCarousel = ({ images, color }) => {
@@ -138,114 +137,12 @@ const Projects = ({ isDark }) => {
   const scrollContainerRef = useRef(null);
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [activeIndex, setActiveIndex] = useState(0);
-  const [likedProjects, setLikedProjects] = useState({});
-  const [activeCommentBox, setActiveCommentBox] = useState(null);
-  const [comments, setComments] = useState({});
-  const [commentText, setCommentText] = useState("");
-  const [showToast, setShowToast] = useState(false);
 
-  const [sessionLiked, setSessionLiked] = useState(() => {
-    try {
-      const saved = localStorage.getItem('likedProjects');
-      return saved ? JSON.parse(saved) : {};
-    } catch {
-      return {};
-    }
-  });
-
-  const toggleLike = async (id) => {
-    const hasLiked = sessionLiked[id];
-    const action = hasLiked ? 'unlike' : 'like';
-
-    setSessionLiked(prev => {
-      const next = { ...prev, [id]: !hasLiked };
-      localStorage.setItem('likedProjects', JSON.stringify(next));
-      return next;
-    });
-
-    try {
-      const res = await interactionAPI.toggleLike(id, { action });
-      if (res.data.success) {
-         setLikedProjects(prev => ({ ...prev, [id]: res.data.data.likes }));
-      }
-    } catch (error) {
-       console.error("Error toggling like", error);
-       setSessionLiked(prev => {
-         const next = { ...prev, [id]: hasLiked };
-         localStorage.setItem('likedProjects', JSON.stringify(next));
-         return next;
-       });
-    }
-  };
-
-  const toggleCommentBox = (id) => {
-    setActiveCommentBox(activeCommentBox === id ? null : id);
-    setCommentText("");
-  };
-
-  const handleAddComment = async (e, id) => {
-    e.preventDefault();
-    if (!commentText.trim()) return;
-    
-    try {
-      const res = await interactionAPI.addComment(id, { text: commentText, user: "Guest User" });
-      if (res.data.success) {
-        setComments(prev => ({
-          ...prev,
-          [id]: res.data.data.comments
-        }));
-      }
-    } catch (error) {
-      console.error("Failed to add comment", error);
-    }
-    setCommentText("");
-  };
-
-  const handleShare = async (project) => {
-    const shareUrl = project.liveLink || project.githubLink || window.location.href;
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: project.title,
-          text: project.description,
-          url: shareUrl,
-        });
-      } catch (error) {
-        console.log('Error sharing', error);
-      }
-    } else {
-      navigator.clipboard.writeText(shareUrl);
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
-    }
-  };
-
-  // Ensure initial scroll position and fetch interactions on mount
+  // Ensure initial scroll position is 0 on mount
   useEffect(() => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollLeft = 0;
     }
-
-    const fetchInteractions = async () => {
-      const likesMap = {};
-      const commentsMap = {};
-      
-      try {
-        await Promise.all(defaultProjects.map(async (p) => {
-          const res = await interactionAPI.getInteractions(p._id);
-          if (res.data && res.data.success) {
-            likesMap[p._id] = res.data.data.likes || 0;
-            commentsMap[p._id] = res.data.data.comments || [];
-          }
-        }));
-        setLikedProjects(likesMap);
-        setComments(commentsMap);
-      } catch (error) {
-        console.error("Failed to fetch interactions", error);
-      }
-    };
-    
-    fetchInteractions();
   }, []);
 
   const filteredProjects = selectedFilter === "all" 
@@ -404,78 +301,14 @@ const Projects = ({ isDark }) => {
 
                   {/* Image Carousel — shown only for projects with images */}
                   {project.images && project.images.length > 0 && (
-                    <div className="mb-4">
+                    <div className="mb-6">
                       <ProjectCarousel images={project.images} color={project.color} />
                     </div>
                   )}
 
-                  {/* Interaction Bar (Instagram style) */}
-                  <div className="flex items-center gap-4 mb-3">
-                    <button 
-                      onClick={() => toggleLike(project._id)}
-                      className={`transition-all duration-300 active:scale-90 ${sessionLiked[project._id] ? 'text-red-500' : 'text-gray-500 hover:text-red-500'}`}
-                      aria-label="Like project"
-                    >
-                      <Heart size={22} fill={sessionLiked[project._id] ? 'currentColor' : 'none'} className={sessionLiked[project._id] ? 'drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]' : ''} />
-                    </button>
-                    <button 
-                      onClick={() => toggleCommentBox(project._id)}
-                      className={`transition-colors duration-300 active:scale-90 ${activeCommentBox === project._id ? (isDark ? 'text-white' : 'text-gray-900') : 'text-gray-500'} ${isDark ? 'hover:text-white' : 'hover:text-gray-900'}`}
-                      aria-label="Comment"
-                    >
-                      <MessageCircle size={22} />
-                    </button>
-                    <button 
-                      onClick={() => handleShare(project)}
-                      className={`text-gray-500 transition-colors duration-300 active:scale-90 ${isDark ? 'hover:text-white' : 'hover:text-gray-900'}`}
-                      aria-label="Share"
-                    >
-                      <Send size={22} />
-                    </button>
-                  </div>
-
-                  {/* Likes count info */}
-                  <div className={`text-[11px] font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                    {likedProjects[project._id] === 1 ? '1 like' : `${likedProjects[project._id] || 0} likes`}
-                  </div>
-
-                  <p className={`text-sm leading-relaxed ${activeCommentBox === project._id ? 'mb-2' : 'mb-6'} ${isDark ? 'text-gray-400' : 'text-gray-600'} line-clamp-2`}>
-                    <span className={`font-bold mr-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>{project.title.toLowerCase()}</span>
+                  <p className={`text-sm leading-relaxed mb-8 ${isDark ? 'text-gray-400' : 'text-gray-600'} h-[4rem] line-clamp-3`}>
                     {project.description}
                   </p>
-
-                  {/* Comment Section */}
-                  {activeCommentBox === project._id && (
-                    <div className="mb-6 animate-fade-in relative z-20">
-                      {/* Comments List */}
-                      <div className="max-h-24 overflow-y-auto hide-scrollbar mb-3 space-y-2">
-                        {(comments[project._id] || []).map(comment => (
-                          <div key={comment.id} className="text-[11px] leading-tight flex gap-2">
-                            <span className={`font-bold flex-shrink-0 ${isDark ? 'text-white' : 'text-gray-900'}`}>{comment.user}</span>
-                            <span className={isDark ? 'text-gray-300' : 'text-gray-700'}>{comment.text}</span>
-                          </div>
-                        ))}
-                      </div>
-                      
-                      {/* Add Comment Input */}
-                      <form onSubmit={(e) => handleAddComment(e, project._id)} className={`flex items-center gap-2 border-t ${isDark ? 'border-gray-800' : 'border-gray-200'} pt-3 mt-2`}>
-                        <input 
-                          type="text" 
-                          value={commentText}
-                          onChange={(e) => setCommentText(e.target.value)}
-                          placeholder="Add a comment..." 
-                          className={`flex-1 bg-transparent text-[11px] py-1 focus:outline-none placeholder-gray-500 ${isDark ? 'text-white' : 'text-gray-900'} transition-colors`}
-                        />
-                        <button 
-                          type="submit"
-                          disabled={!commentText.trim()}
-                          className={`text-[11px] font-bold transition-colors ${commentText.trim() ? 'text-cyan-500 hover:text-cyan-400' : 'text-gray-500 cursor-not-allowed'}`}
-                        >
-                          Post
-                        </button>
-                      </form>
-                    </div>
-                  )}
 
                   {/* Tech Stack Chips */}
                   <div className="flex flex-wrap gap-2 mb-8">
@@ -530,12 +363,6 @@ const Projects = ({ isDark }) => {
               />
             ))}
           </div>
-        </div>
-
-        {/* Toast Notification */}
-        <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full bg-[#050b14]/90 border border-cyan-500/20 backdrop-blur-md text-cyan-400 font-mono text-[10px] tracking-widest uppercase transition-all duration-300 pointer-events-none flex items-center gap-2 shadow-[0_0_20px_rgba(6,182,212,0.15)] ${showToast ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
-          Link Copied To Clipboard
         </div>
 
         {/* Grid Background Micro-Decor */}

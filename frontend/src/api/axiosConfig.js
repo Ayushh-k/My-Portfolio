@@ -45,11 +45,4 @@ export const contactAPI = {
   delete: (id) => api.delete(`/contact/${id}`)
 };
 
-// Interactions API
-export const interactionAPI = {
-  getInteractions: (projectId) => api.get(`/interactions/${projectId}`),
-  addComment: (projectId, data) => api.post(`/interactions/${projectId}/comment`, data),
-  toggleLike: (projectId, data) => api.post(`/interactions/${projectId}/like`, data)
-};
-
 export default api;
