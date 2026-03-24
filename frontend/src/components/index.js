@@ -18,4 +18,3 @@ export { default as BugGame } from './BugGame';
 export { default as CustomCursor } from './CustomCursor';
 export { default as TypoLoop } from './TypoLoop';
 export { default as Platforms } from './Platforms';
-export { default as PerformanceGraph } from './PerformanceGraph';
