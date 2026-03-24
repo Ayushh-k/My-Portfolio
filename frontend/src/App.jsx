@@ -17,6 +17,7 @@ import {
   CustomCursor,
   TypoLoop,
   Platforms,
+  PerformanceGraph,
 } from "./components";
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
           <Projects isDark={isDark} />
           <GitHubStats isDark={isDark} username="Ayushh-k" />
           <Platforms isDark={isDark} />
+          <PerformanceGraph isDark={isDark} />
           <Certifications isDark={isDark} />
           <Contact isDark={isDark} />
           <Footer isDark={isDark} />
