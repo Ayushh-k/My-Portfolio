@@ -1,10 +1,12 @@
 import Interaction from '../models/Interaction.js';
+import connectDB from '../config/database.js';
 
 // @desc    Get interactions for a project
 // @route   GET /api/interactions/:projectId
 // @access  Public
 export const getInteractions = async (req, res) => {
   try {
+    await connectDB();
     const { projectId } = req.params;
     let interaction = await Interaction.findOne({ projectId });
     
@@ -24,6 +26,7 @@ export const getInteractions = async (req, res) => {
 // @access  Public
 export const addComment = async (req, res) => {
   try {
+    await connectDB();
     const { projectId } = req.params;
     const { text, user } = req.body;
 
@@ -57,6 +60,7 @@ export const addComment = async (req, res) => {
 // @access  Public
 export const toggleLike = async (req, res) => {
   try {
+    await connectDB();
     const { projectId } = req.params;
     const { action } = req.body; // 'like' or 'unlike'
 
