@@ -158,6 +158,7 @@ const Projects = ({ isDark }) => {
   const scrollContainerRef = useRef(null);
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [expandedProjects, setExpandedProjects] = useState({});
 
   // Ensure initial scroll position is 0 on mount
   useEffect(() => {
@@ -327,9 +328,19 @@ const Projects = ({ isDark }) => {
                     </div>
                   )}
 
-                  <p className={`text-sm leading-relaxed mb-8 ${isDark ? 'text-gray-400' : 'text-gray-600'} h-[4rem] line-clamp-3`}>
-                    {project.description}
-                  </p>
+                  <div className="mb-8">
+                    <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'} transition-all duration-300 ${expandedProjects[project._id] ? '' : 'line-clamp-3'}`}>
+                      {project.description}
+                    </p>
+                    {project.description.length > 100 && (
+                      <button 
+                        onClick={() => setExpandedProjects(prev => ({ ...prev, [project._id]: !prev[project._id] }))}
+                        className="text-cyan-500/80 hover:text-cyan-400 text-xs mt-2 font-mono uppercase tracking-widest transition-colors focus:outline-none"
+                      >
+                        {expandedProjects[project._id] ? "Read Less" : "Read More..."}
+                      </button>
+                    )}
+                  </div>
 
                   {/* Tech Stack Chips */}
                   <div className="flex flex-wrap gap-2 mb-8">
