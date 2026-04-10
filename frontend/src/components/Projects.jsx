@@ -72,11 +72,13 @@ const defaultProjects = [
     category: "Fullstack",
     color: "#06b6d4",
     images: [
-      "/images/skillswap-1.png",
-      "/images/skillswap-2.png",
-      "/images/skillswap-3.png",
-      "/images/skillswap-4.png",
-      "/images/skillswap-5.png",
+      "/images/skillswap1.png",
+      "/images/skillswap2.png",
+      "/images/skillswap3.png",
+      "/images/skillswap4.png",
+      "/images/skillswap5.png",
+      "/images/skillswap6.png",
+      "/images/skillswap7.png",
     ]
   },
   {
