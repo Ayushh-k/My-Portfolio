@@ -62,6 +62,25 @@ const ProjectCarousel = ({ images, color }) => {
 const defaultProjects = [
   {
     _id: "1",
+    title: "Skill-Swap",
+    shortDescription: "Peer-to-Peer Skill Barter Platform",
+    description: "Engineered a premium peer-to-peer barter platform for professional skill exchange and mutual growth. Architected using Next.js 15 with edge rendering, strictly typed backend schemas, and advanced filtering modules to streamline expert connections.",
+    technologies: ["Next.js 15", "TypeScript", "Node.js", "MongoDB", "Tailwind CSS"],
+    metrics: { status: "LIVE", complexity: "EDGE-RENDERED", auth: "0x5F" },
+    githubLink: "https://github.com/Ayushh-k",
+    liveLink: "https://skill-swap-0v82.onrender.com/",
+    category: "Fullstack",
+    color: "#06b6d4",
+    images: [
+      "/images/skillswap-1.png",
+      "/images/skillswap-2.png",
+      "/images/skillswap-3.png",
+      "/images/skillswap-4.png",
+      "/images/skillswap-5.png",
+    ]
+  },
+  {
+    _id: "2",
     title: "AyurSetu",
     shortDescription: "Bridge to Wellness",
     description: "A full-stack web application for optimizing doctor availability and appointment scheduling.",
@@ -80,7 +99,7 @@ const defaultProjects = [
     ]
   },
   {
-    _id: "2",
+    _id: "3",
     title: "Job Tracker",
     shortDescription: "Career Management System",
     description: "A web application to organize and track job applications efficiently with company tracking.",
@@ -97,7 +116,7 @@ const defaultProjects = [
     ]
   },
   {
-    _id: "3",
+    _id: "4",
     title: "Survey Portal",
     shortDescription: "Data Capture Interface",
     description: "A web-based survey platform for creating and managing surveys with real-time response analysis.",
@@ -114,7 +133,7 @@ const defaultProjects = [
     ]
   },
   {
-    _id: "4",
+    _id: "5",
     title: "Resource Monitor",
     shortDescription: "System Telemetry Tool",
     description: "Real-time tracking of system resources like CPU, memory, and process usage.",
